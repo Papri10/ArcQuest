@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ArcQuest</title>
+
+<style>
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background: #080b16;
+  color: white;
+  padding: 20px;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 0;
+  border-bottom: 1px solid #29324b;
+}
+
+.logo {
+  font-size: 25px;
+  font-weight: bold;
+  color: #69e3ff;
+}
+
+button {
+  background: linear-gradient(100deg, #69e3ff, #9b83ff);
+  color: #080b16;
+  border: none;
+  padding: 12px 18px;
+  border-radius: 10px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.container {
+  max-width: 1000px;
+  margin: auto;
+}
+
+.hero {
+  padding: 65px 0 35px;
+}
+
+.hero h1 {
+  font-size: 48px;
+  margin: 15px 0;
+}
+
+.gradient {
+  color: #69e3ff;
+}
+
+p {
+  color: #9ba8c4;
+  line-height: 1.7;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 18px;
+  margin: 25px 0;
+}
+
+.card {
+  background: #111a2e;
+  border: 1px solid #293653;
+  border-radius: 16px;
+  padding: 22px;
+}
+
+.card h2 {
+  margin-bottom: 12px;
+}
+
+input {
+  width: 100%;
+  padding: 13px;
+  margin: 10px 0;
+  background: #080e1d;
+  border: 1px solid #34415d;
+  border-radius: 9px;
+  color: white;
+}
+
+.card button {
+  width: 100%;
+}
+
+.result {
+  margin-top: 12px;
+  color: #69e3ff;
+  font-size: 13px;
+}
+
+footer {
+  text-align: center;
+  border-top: 1px solid #29324b;
+  padding: 25px 10px;
+  margin-top: 40px;
+  line-height: 2;
+}
+
+footer a {
+  color: #69e3ff;
+  text-decoration: none;
+}
+
+@media(max-width:600px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .hero h1 {
+    font-size: 38px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<header>
+  <div class="logo">◈ ArcQuest</div>
+  <button onclick="connectWallet()">Connect Wallet</button>
+</header>
+
+<section class="hero">
+  <p>THE ARC ECOSYSTEM</p>
+  <h1>Explore More.<br>
+  <span class="gradient">Build on Arc.</span></h1>
+  <p>Your Web3 journey starts here. Explore tools,
+  manage quests and discover the Arc ecosystem.</p>
+</section>
+
+<div class="grid">
+
+  <!-- Wallet Checker -->
+  <div class="card">
+    <h2>◈ Wallet Checker</h2>
+    <p>Check public wallet address format.</p>
+    <input id="wallet" placeholder="Enter 0x wallet address">
+    <button onclick="checkWallet()">Check Wallet</button>
+    <div class="result" id="walletResult"></div>
+  </div>
+
+  <!-- Swap -->
+  <div class="card">
+    <h2>⇄ Swap Calculator</h2>
+    <p>Calculate an estimated token conversion.</p>
+    <input id="amount" type="number" placeholder="Enter amount">
+    <input id="rate" type="number" placeholder="Enter demo rate">
+    <button onclick="swap()">Calculate Swap</button>
+    <div class="result" id="swapResult"></div>
+  </div>
+
+  <!-- Token Builder -->
+  <div class="card">
+    <h2>✦ Token Builder</h2>
+    <p>Create your token project draft.</p>
+    <input id="tokenName" placeholder="Token Name">
+    <input id="symbol" placeholder="Token Symbol">
+    <input id="supply" type="number" placeholder="Total Supply">
+    <button onclick="createToken()">Create Draft</button>
+    <div class="result" id="tokenResult"></div>
+  </div>
+
+  <!-- Quest Tracker -->
+  <div class="card">
+    <h2>🏆 Quest Tracker</h2>
+    <p>Complete your Arc learning tasks.</p>
+
+    <label><input type="checkbox" class="quest"> Learn about Arc</label><br>
+    <label><input type="checkbox" class="quest"> Explore Web3</label><br>
+    <label><input type="checkbox" class="quest"> Learn wallet safety</label>
+
+    <div class="result" id="progress">0 / 3 Completed</div>
+  </div>
+
+</div>
+
+<footer>
+  <h3>◈ ArcQuest</h3>
+  <p>Build by <strong style="color:white">Papri</strong></p>
+
+  <p>
+    X:
+    <a href="https://x.com/Papri0248" target="_blank">
+      @Papri0248
+    </a>
+  </p>
+
+  <p>Discord: @papri0248_07315</p>
+
+  <p>© 2026 ArcQuest. All Rights Reserved.</p>
+</footer>
+
+</div>
+
+<script>
+
+function connectWallet() {
+  alert("ArcQuest Demo Mode: Live wallet connection is not enabled.");
+}
+
+function checkWallet() {
+  let address = document.getElementById("wallet").value.trim();
+
+  if (/^0x[a-fA-F0-9]{40}$/.test(address)) {
+    document.getElementById("walletResult").innerText =
+      "Valid wallet address format!";
+  } else {
+    document.getElementById("walletResult").innerText =
+      "Invalid wallet address!";
+  }
+}
+
+function swap() {
+  let amount = Number(document.getElementById("amount").value);
+  let rate = Number(document.getElementById("rate").value);
+
+  if (amount >= 0 && rate >= 0 &&
+      document.getElementById("amount").value !== "" &&
+      document.getElementById("rate").value !== "") {
+    document.getElementById("swapResult").innerText =
+      "Estimated Output: " + (amount * rate);
+  } else {
+    document.getElementById("swapResult").innerText =
+      "Enter valid values!";
+  }
+}
+
+function createToken() {
+  let name = document.getElementById("tokenName").value;
+  let symbol = document.getElementById("symbol").value;
+  let supply = document.getElementById("supply").value;
+
+  if (name && symbol && Number(supply) > 0) {
+    document.getElementById("tokenResult").innerText =
+      "Token Draft Created: " + name + " (" + symbol + ")";
+  } else {
+    document.getElementById("tokenResult").innerText =
+      "Fill all fields correctly!";
+  }
+}
+
+let quests = document.querySelectorAll(".quest");
+
+quests.forEach(quest => {
+  quest.addEventListener("change", () => {
+    let completed = document.querySelectorAll(
+      ".quest:checked"
+    ).length;
+
+    document.getElementById("progress").innerText =
+      completed + " / 3 Completed";
+  });
+});
+
+</script>
+
+</body>
+</html>
